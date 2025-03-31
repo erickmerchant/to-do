@@ -12,31 +12,31 @@ html {
 body {
 	block-size: 100%;
 	font-family: system-ui, sans-serif;
-	font-size: 1.125em;
+	font-size: 1.125rem;
 }
 
 to-do-app {
 	display: grid;
-	max-inline-size: 40em;
-	padding-inline: 1em;
+	max-inline-size: 40rem;
+	padding-inline: 1rem;
 	margin-inline: auto;
-	margin-block-start: 1em;
+	margin-block-start: 1rem;
 	grid-auto-rows: max-content;
 	grid-template-columns: auto min-content;
-	gap: 0.5em;
+	gap: 0.5rem;
 	align-items: center;
 	white-space: nowrap;
 	accent-color: oklch(0.5 0.3 150);
 }
 
 [type="checkbox"] {
-	inline-size: 1em;
-	block-size: 1em;
+	inline-size: 1rem;
+	block-size: 1rem;
 	cursor: pointer;
 }
 
 .title {
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	font-weight: bold;
 }
 
@@ -44,16 +44,16 @@ to-do-app {
 	display: grid;
 	grid-template-columns: min-content auto;
 	align-items: center;
-	gap: 0.5em;
+	gap: 0.5rem;
 }
 
 .input-text {
 	grid-column: 1 / -1;
 	appearance: none;
-	padding-block: 0.25em;
-	padding-inline: 0.5em;
+	padding-block: 0.25rem;
+	padding-inline: 0.5rem;
 	border: 1px solid oklch(0.5 0 0);
-	border-radius: 0.25em;
+	border-radius: 0.25rem;
 }
 
 .list {
@@ -61,7 +61,7 @@ to-do-app {
 	display: grid;
 	grid-template-rows: max-content;
 	grid-template-columns: max-content auto max-content;
-	gap: 0.5em;
+	gap: 0.5rem;
 	list-style: none;
 }
 
@@ -69,9 +69,9 @@ to-do-app {
 	grid-column: 1 / -1;
 	display: grid;
 	background-color: oklch(1 0 0);
-	padding-block: 0.25em;
-	padding-inline: 0.25em;
-	border-radius: 0.25em;
+	padding-block: 0.25rem;
+	padding-inline: 0.25rem;
+	border-radius: 0.25rem;
 	grid-template-columns: subgrid;
 	align-items: center;
 	cursor: move;
@@ -106,16 +106,16 @@ to-do-app {
 }
 
 .delete {
-	inline-size: 1em;
-	block-size: 1em;
+	inline-size: 1rem;
+	block-size: 1rem;
 	appearance: none;
 	background-color: oklch(0 0 0 / 0);
 	border: 0;
 	cursor: pointer;
 
 	:where(svg) {
-		inline-size: 1em;
-		block-size: 1em;
+		inline-size: 1rem;
+		block-size: 1rem;
 		fill: oklch(0.5 0.3 30);
 	}
 }

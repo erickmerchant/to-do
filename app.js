@@ -86,32 +86,30 @@ define("to-do-app").connected((host) => {
 			}
 		});
 	let itemsList = each(state.list)
-		.filter(
-			(entry) => state.showDone || !entry.value.isDone || entry.value.isLeaving
-		)
-		.map((entry) => {
+		.filter((value) => state.showDone || !value.isDone || value.isLeaving)
+		.map((value, index) => {
 			let toggleDoneCheckbox = INPUT()
 				.attr("type", "checkbox")
-				.attr("id", () => `item-${entry.index}`)
-				.prop("checked", () => entry.value.isDone)
+				.attr("id", () => `item-${index()}`)
+				.prop("checked", () => value.isDone)
 				.on("change", function () {
 					let isDone = this.checked;
 
 					if (!state.showDone && isDone) {
-						entry.value.isLeaving = true;
+						value.isLeaving = true;
 					}
 
-					entry.value.isDone = isDone;
+					value.isDone = isDone;
 				});
 			let itemLabel = LABEL()
-				.attr("for", () => `item-${entry.index}`)
-				.text(() => entry.value.text);
+				.attr("for", () => `item-${index()}`)
+				.text(() => value.text);
 			let deleteButton = BUTTON()
 				.attr("type", "button")
 				.classes("delete")
 				.on("click", function () {
-					entry.value.isLeaving = true;
-					entry.value.isDeleted = true;
+					value.isLeaving = true;
+					value.isDeleted = true;
 				})
 				.append(
 					svg()
@@ -127,14 +125,14 @@ define("to-do-app").connected((host) => {
 
 			return LI()
 				.classes("item", {
-					done: () => entry.value.isDone,
-					leaving: () => entry.value.isLeaving,
-					entering: () => entry.value.isEntering,
-					dragging: () => dragState.item === entry.value,
+					done: () => value.isDone,
+					leaving: () => value.isLeaving,
+					entering: () => value.isEntering,
+					dragging: () => dragState.item === value(),
 				})
 				.prop("draggable", true)
 				.on("dragstart", function (e) {
-					dragState.item = entry.value;
+					dragState.item = value();
 
 					e.dataTransfer.effectAllowed = "move";
 				})
@@ -146,16 +144,16 @@ define("to-do-app").connected((host) => {
 						let from = state.list.findIndex((t) => t === dragState.item);
 
 						state.list.splice(from, 1);
-						state.list.splice(entry.index, 0, dragState.item);
+						state.list.splice(index(), 0, dragState.item);
 					}
 				})
 				.on("animationend", function () {
-					entry.value.isLeaving = false;
-					entry.value.isEntering = false;
+					value.isLeaving = false;
+					value.isEntering = false;
 
-					if (entry.value.isDeleted) {
+					if (value.isDeleted) {
 						state.list.splice(
-							state.list.findIndex((item) => item === entry.value),
+							state.list.findIndex((item) => item === value()),
 							1
 						);
 					}

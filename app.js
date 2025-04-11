@@ -161,7 +161,6 @@ define("to-do-app").connected((host) => {
 				.append(toggleDoneCheckbox, itemLabel, deleteButton);
 		})
 		.fallback(() => LI().classes("item").text("No items yet"));
-
 	let listOl = OL().classes("list").append(itemsList);
 
 	host.append(

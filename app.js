@@ -64,7 +64,7 @@ define("to-do-app").connected((host) => {
 		.classes("input-text")
 		.attr("placeholder", "What do you have to do?")
 		.on("keypress", function (e) {
-			if (e.keyCode === 13) {
+			if (e.key === "Enter") {
 				e.preventDefault();
 
 				let text = this.value.trim();

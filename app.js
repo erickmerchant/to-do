@@ -1,13 +1,15 @@
-import {
-	html,
-	svg,
-	$,
-	watch,
-	effect,
-	define,
-	each,
-	when,
-} from "handcraft/prelude/all.js";
+import "handcraft/dom/_nodes.js";
+import "handcraft/dom/append.js";
+import "handcraft/dom/attr.js";
+import "handcraft/dom/classes.js";
+import "handcraft/dom/on.js";
+import "handcraft/dom/prop.js";
+import "handcraft/dom/text.js";
+import {define} from "handcraft/define.js";
+import {each} from "handcraft/each.js";
+import {html, svg, $} from "handcraft/dom.js";
+import {watch, effect} from "handcraft/reactivity.js";
+import {when} from "handcraft/when.js";
 
 let {
 	input: INPUT,
@@ -170,7 +172,7 @@ define("to-do-app").connected((host) => {
 		listOl
 	);
 
-	$(document.body).on(["dragover", "dragleave", "drop"], function (e) {
+	$(document.body).on("dragover dragleave drop", function (e) {
 		e.preventDefault();
 	});
 });

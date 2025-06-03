@@ -1,7 +1,6 @@
 import "handcraft/dom/classes.js";
 import "handcraft/dom/on.js";
 import "handcraft/dom/prop.js";
-import "handcraft/dom/text.js";
 import {define} from "handcraft/define.js";
 import {each} from "handcraft/each.js";
 import {h, $} from "handcraft/dom.js";
@@ -28,7 +27,7 @@ define("to-do-app").connected((host) => {
 		localStorage.setItem("to-do-app", JSON.stringify(state));
 	});
 
-	let heading = h1.classes("title").text("To Do List");
+	let heading = h1.classes("title")("To Do List");
 	let showDone = () =>
 		div.classes("show-done")(
 			input
@@ -47,7 +46,7 @@ define("to-do-app").connected((host) => {
 
 					state.showDone = show;
 				}),
-			label.for("show-done").text("Show done")
+			label.for("show-done")("Show done")
 		);
 	let textInput = input
 		.classes("input-text")
@@ -90,7 +89,7 @@ define("to-do-app").connected((host) => {
 
 					value.isDone = isDone;
 				});
-			let itemLabel = label.for(() => `item-${index()}`).text(() => value.text);
+			let itemLabel = label.for(() => `item-${index()}`)(() => value.text);
 			let deleteButton = button
 				.type("button")
 				.classes("delete")
@@ -99,7 +98,7 @@ define("to-do-app").connected((host) => {
 					value.isDeleted = true;
 				})(
 				svg.viewBox("0 0 16 16")(
-					title.text("Delete"),
+					title("Delete"),
 					path.d(
 						"M4 1 L8 5 L12 1 L15 4 L11 8 L15 12 L12 15 L8 11 L4 15 L1 12 L5 8 L1 4 Z"
 					)
@@ -142,7 +141,7 @@ define("to-do-app").connected((host) => {
 					}
 				})(toggleDoneCheckbox, itemLabel, deleteButton);
 		})
-		.fallback(() => li.classes("item").text("No items yet"));
+		.fallback(() => li.classes("item")("No items yet"));
 	let listOl = ol.classes("list")(itemsList);
 
 	host(

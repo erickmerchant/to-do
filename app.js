@@ -1,4 +1,5 @@
 import "handcraft/dom/classes.js";
+import "handcraft/dom/nodes.js";
 import "handcraft/dom/on.js";
 import "handcraft/dom/prop.js";
 import {define} from "handcraft/define.js";

@@ -5,14 +5,11 @@
 	font: inherit;
 }
 
-html {
-	block-size: 100%;
-}
-
+html,
 body {
 	block-size: 100%;
-	font-family: system-ui, sans-serif;
 	font-size: 1.125rem;
+	font-family: system-ui, sans-serif;
 }
 
 to-do-app {

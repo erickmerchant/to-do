@@ -11,7 +11,7 @@ import {when} from "handcraft/when.js";
 let {input, label, h1, li, button, ol, div} = h.html;
 let {title, path, svg} = h.svg;
 
-define("to-do-app").connected((host) => {
+define("to-do-app").setup((host) => {
 	let state = watch(
 		JSON.parse(localStorage.getItem("to-do-app")) ?? {
 			showDone: true,
@@ -77,9 +77,10 @@ define("to-do-app").connected((host) => {
 	let itemsList = each(state.list)
 		.filter((value) => state.showDone || !value.isDone || value.isLeaving)
 		.map((value, index) => {
+			let genId = () => `item-${index()}`;
 			let toggleDoneCheckbox = input
 				.type("checkbox")
-				.id(() => `item-${index()}`)
+				.id(genId)
 				.prop("checked", () => value.isDone)
 				.on("change", function () {
 					let isDone = this.checked;
@@ -90,7 +91,7 @@ define("to-do-app").connected((host) => {
 
 					value.isDone = isDone;
 				});
-			let itemLabel = label.for(() => `item-${index()}`)(() => value.text);
+			let itemLabel = label.for(genId)(() => value.text);
 			let deleteButton = button
 				.type("button")
 				.classes("delete")

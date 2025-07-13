@@ -2,21 +2,21 @@ import "handcraft/dom/classes.js";
 import "handcraft/dom/nodes.js";
 import "handcraft/dom/on.js";
 import "handcraft/dom/prop.js";
-import {define} from "handcraft/define.js";
-import {each} from "handcraft/each.js";
-import {h, $} from "handcraft/dom.js";
-import {watch, effect} from "handcraft/reactivity.js";
-import {when} from "handcraft/when.js";
+import { define } from "handcraft/define.js";
+import { each } from "handcraft/each.js";
+import { $, h } from "handcraft/dom.js";
+import { effect, watch } from "handcraft/reactivity.js";
+import { when } from "handcraft/when.js";
 
-let {input, label, h1, li, button, ol, div} = h.html;
-let {title, path, svg} = h.svg;
+let { input, label, h1, li, button, ol, div } = h.html;
+let { title, path, svg } = h.svg;
 
 define("to-do-app").setup((host) => {
 	let state = watch(
 		JSON.parse(localStorage.getItem("to-do-app")) ?? {
 			showDone: true,
 			list: [],
-		}
+		},
 	);
 	let dragState = watch({
 		item: null,
@@ -47,7 +47,7 @@ define("to-do-app").setup((host) => {
 
 					state.showDone = show;
 				}),
-			label.for("show-done")("Show done")
+			label.for("show-done")("Show done"),
 		);
 	let textInput = input
 		.classes("input-text")
@@ -68,7 +68,7 @@ define("to-do-app").setup((host) => {
 						isDone: false,
 						isEntering: true,
 						isLeaving: false,
-					})
+					}),
 				);
 
 				this.value = "";
@@ -99,13 +99,13 @@ define("to-do-app").setup((host) => {
 					value.isLeaving = true;
 					value.isDeleted = true;
 				})(
-				svg.viewBox("0 0 16 16")(
-					title("Delete"),
-					path.d(
-						"M4 1 L8 5 L12 1 L15 4 L11 8 L15 12 L12 15 L8 11 L4 15 L1 12 L5 8 L1 4 Z"
-					)
-				)
-			);
+					svg.viewBox("0 0 16 16")(
+						title("Delete"),
+						path.d(
+							"M4 1 L8 5 L12 1 L15 4 L11 8 L15 12 L12 15 L8 11 L4 15 L1 12 L5 8 L1 4 Z",
+						),
+					),
+				);
 
 			return li
 				.classes("item", {
@@ -138,7 +138,7 @@ define("to-do-app").setup((host) => {
 					if (value.isDeleted) {
 						state.list.splice(
 							state.list.findIndex((item) => item === value()),
-							1
+							1,
 						);
 					}
 				})(toggleDoneCheckbox, itemLabel, deleteButton);
@@ -150,7 +150,7 @@ define("to-do-app").setup((host) => {
 		heading,
 		when(() => state.list.length).show(showDone),
 		textInput,
-		listOl
+		listOl,
 	);
 
 	$(document.body).on("dragover dragleave drop", function (e) {

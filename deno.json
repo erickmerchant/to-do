@@ -1,13 +1,13 @@
 {
-  "tasks": {
-    "bundle": "deno bundle --platform browser --minify -o app.min.js app.js",
-    "dev:bundle": "deno bundle --watch --platform browser --minify -o app.min.js app.js",
-    "dev:serve": "coolstyleserver serve -p3000 .",
-    "dev": {
-      "dependencies": ["dev:bundle", "dev:serve"]
-    }
-  },
-  "imports": {
-    "handcraft": "npm:handcraft"
-  }
+	"tasks": {
+		"bundle": "deno bundle --platform browser --minify -o app.min.js app.js",
+		"dev:bundle": "deno bundle --watch --platform browser --minify -o app.min.js app.js",
+		"dev:serve": "coolstyleserver serve -p3000 .",
+		"dev": {
+			"dependencies": ["dev:bundle", "dev:serve"]
+		}
+	},
+	"imports": {
+		"handcraft": "npm:handcraft"
+	}
 }

@@ -9,18 +9,17 @@ const {
 	script,
 	body,
 	"to-do-app": todoApp,
-	button,
 } = h.html;
 
-export default async function ({ urls }) {
+export default async function (_, resolve) {
 	return render(
 		html.lang("en-US")(
 			head(
 				meta.charset("utf-8"),
 				meta.name("viewport").content("width=device-width, initial-scale=1"),
 				title("To Do List"),
-				link.rel("stylesheet").href(urls["/styles.css"]),
-				script.type("module").src(urls["/app.js"]),
+				link.rel("stylesheet").href(resolve("/styles.css")),
+				script.type("module").src(resolve("/app.js")),
 			),
 			body(todoApp()),
 		),

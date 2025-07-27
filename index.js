@@ -11,7 +11,7 @@ const {
 	"to-do-app": todoApp,
 } = h.html;
 
-export default async function (_, resolve) {
+export default function ({ resolve }) {
 	return render(
 		html.lang("en-US")(
 			head(

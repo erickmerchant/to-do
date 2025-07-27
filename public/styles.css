@@ -75,7 +75,7 @@ to-do-app {
 	animation-duration: 0.125s;
 	animation-fill-mode: both;
 
-	:where(:not(a, button, input)) {
+	:not(a, button, input) {
 		cursor: inherit;
 	}
 }
@@ -110,7 +110,7 @@ to-do-app {
 	border: 0;
 	cursor: pointer;
 
-	:where(svg) {
+	svg {
 		inline-size: 1rem;
 		block-size: 1rem;
 		fill: oklch(0.5 0.3 30);

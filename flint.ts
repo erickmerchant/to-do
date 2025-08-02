@@ -6,7 +6,7 @@ import index from "./index.js";
 const app = flint("public", "dist")
 	.cache("/")
 	.route("/", index)
-	.use("/*.css", css)
+	.use("/styles.css", css)
 	.use("/app.js", js);
 
 export default app;

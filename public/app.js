@@ -8,17 +8,17 @@ import { $, h } from "handcraft/dom.js";
 import { effect, watch } from "handcraft/reactivity.js";
 import { when } from "handcraft/when.js";
 
-let { input, label, h1, li, button, ol, div } = h.html;
-let { title, path, svg } = h.svg;
+const { input, label, h1, li, button, ol, div } = h.html;
+const { title, path, svg } = h.svg;
 
 define("to-do-app").setup((host) => {
-	let state = watch(
+	const state = watch(
 		JSON.parse(localStorage.getItem("to-do-app")) ?? {
 			showDone: true,
 			list: [],
 		},
 	);
-	let dragState = watch({
+	const dragState = watch({
 		item: null,
 	});
 
@@ -28,17 +28,17 @@ define("to-do-app").setup((host) => {
 		localStorage.setItem("to-do-app", JSON.stringify(state));
 	});
 
-	let heading = h1.classes("title")("To Do List");
-	let showDone = () =>
+	const heading = h1.classes("title")("To Do List");
+	const showDone = () =>
 		div.classes("show-done")(
 			input
 				.id("show-done")
 				.type("checkbox")
 				.prop("checked", () => state.showDone)
 				.on("change", function () {
-					let show = this.checked;
+					const show = this.checked;
 
-					for (let item of state.list) {
+					for (const item of state.list) {
 						if (item.isDone) {
 							item.isEntering = show;
 							item.isLeaving = !show;
@@ -49,14 +49,14 @@ define("to-do-app").setup((host) => {
 				}),
 			label.for("show-done")("Show done"),
 		);
-	let textInput = input
+	const textInput = input
 		.classes("input-text")
 		.placeholder("What do you have to do?")
 		.on("keypress", function (e) {
 			if (e.key === "Enter") {
 				e.preventDefault();
 
-				let text = this.value.trim();
+				const text = this.value.trim();
 
 				if (!text) {
 					return;
@@ -74,16 +74,16 @@ define("to-do-app").setup((host) => {
 				this.value = "";
 			}
 		});
-	let itemsList = each(state.list)
+	const itemsList = each(state.list)
 		.filter((value) => state.showDone || !value.isDone || value.isLeaving)
 		.map((value, index) => {
-			let genId = () => `item-${index()}`;
-			let toggleDoneCheckbox = input
+			const genId = () => `item-${index()}`;
+			const toggleDoneCheckbox = input
 				.type("checkbox")
 				.id(genId)
 				.prop("checked", () => value.isDone)
 				.on("change", function () {
-					let isDone = this.checked;
+					const isDone = this.checked;
 
 					if (!state.showDone && isDone) {
 						value.isLeaving = true;
@@ -91,8 +91,8 @@ define("to-do-app").setup((host) => {
 
 					value.isDone = isDone;
 				});
-			let itemLabel = label.for(genId)(() => value.text);
-			let deleteButton = button
+			const itemLabel = label.for(genId)(() => value.text);
+			const deleteButton = button
 				.type("button")
 				.classes("delete")
 				.on("click", function () {
@@ -125,7 +125,7 @@ define("to-do-app").setup((host) => {
 				})
 				.on("dragenter", function () {
 					if (dragState.item != null) {
-						let from = state.list.findIndex((t) => t === dragState.item);
+						const from = state.list.findIndex((t) => t === dragState.item);
 
 						state.list.splice(from, 1);
 						state.list.splice(index(), 0, dragState.item);
@@ -144,7 +144,7 @@ define("to-do-app").setup((host) => {
 				})(toggleDoneCheckbox, itemLabel, deleteButton);
 		})
 		.fallback(() => li.classes("item")("No items yet"));
-	let listOl = ol.classes("list")(itemsList);
+	const listOl = ol.classes("list")(itemsList);
 
 	host(
 		heading,

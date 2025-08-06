@@ -1,127 +1,127 @@
 * {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
-	font: inherit;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font: inherit;
 }
 
 html,
 body {
-	block-size: 100%;
-	font-size: 1.125rem;
-	font-family: system-ui, sans-serif;
+  block-size: 100%;
+  font-size: 1.125rem;
+  font-family: system-ui, sans-serif;
 }
 
 to-do-app {
-	display: grid;
-	max-inline-size: 40rem;
-	padding-inline: 1rem;
-	margin-inline: auto;
-	margin-block-start: 1rem;
-	grid-auto-rows: max-content;
-	grid-template-columns: auto min-content;
-	gap: 0.5rem;
-	align-items: center;
-	white-space: nowrap;
-	accent-color: oklch(0.5 0.3 150);
+  display: grid;
+  max-inline-size: 40rem;
+  padding-inline: 1rem;
+  margin-inline: auto;
+  margin-block-start: 1rem;
+  grid-auto-rows: max-content;
+  grid-template-columns: auto min-content;
+  gap: 0.5rem;
+  align-items: center;
+  white-space: nowrap;
+  accent-color: oklch(0.5 0.3 150);
 }
 
 [type="checkbox"] {
-	inline-size: 1rem;
-	block-size: 1rem;
-	cursor: pointer;
+  inline-size: 1rem;
+  block-size: 1rem;
+  cursor: pointer;
 }
 
 .title {
-	font-size: 1.5rem;
-	font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .show-done {
-	display: grid;
-	grid-template-columns: min-content auto;
-	align-items: center;
-	gap: 0.5rem;
+  display: grid;
+  grid-template-columns: min-content auto;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .input-text {
-	grid-column: 1 / -1;
-	appearance: none;
-	padding-block: 0.25rem;
-	padding-inline: 0.5rem;
-	border: 1px solid oklch(0.5 0 0);
-	border-radius: 0.25rem;
+  grid-column: 1 / -1;
+  appearance: none;
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+  border: 1px solid oklch(0.5 0 0);
+  border-radius: 0.25rem;
 }
 
 .list {
-	grid-column: 1 / -1;
-	display: grid;
-	grid-template-rows: max-content;
-	grid-template-columns: max-content auto max-content;
-	gap: 0.5rem;
-	list-style: none;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: max-content;
+  grid-template-columns: max-content auto max-content;
+  gap: 0.5rem;
+  list-style: none;
 }
 
 .item {
-	grid-column: 1 / -1;
-	display: grid;
-	background-color: oklch(1 0 0);
-	padding-block: 0.25rem;
-	padding-inline: 0.25rem;
-	border-radius: 0.25rem;
-	grid-template-columns: subgrid;
-	align-items: center;
-	cursor: move;
-	animation-duration: 0.125s;
-	animation-fill-mode: both;
+  grid-column: 1 / -1;
+  display: grid;
+  background-color: oklch(1 0 0);
+  padding-block: 0.25rem;
+  padding-inline: 0.25rem;
+  border-radius: 0.25rem;
+  grid-template-columns: subgrid;
+  align-items: center;
+  cursor: move;
+  animation-duration: 0.125s;
+  animation-fill-mode: both;
 
-	:not(a, button, input) {
-		cursor: inherit;
-	}
+  :not(a, button, input) {
+    cursor: inherit;
+  }
 }
 
 .dragging {
-	background-color: oklch(0.9 0 0) !important;
-	cursor: move !important;
+  background-color: oklch(0.9 0 0) !important;
+  cursor: move !important;
 
-	> * {
-		visibility: hidden;
-	}
+  > * {
+    visibility: hidden;
+  }
 }
 
 .done {
-	text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .leaving {
-	animation-name: fade;
+  animation-name: fade;
 }
 
 .entering {
-	animation-direction: reverse;
-	animation-name: fade;
+  animation-direction: reverse;
+  animation-name: fade;
 }
 
 .delete {
-	inline-size: 1rem;
-	block-size: 1rem;
-	appearance: none;
-	background-color: oklch(0 0 0 / 0);
-	border: 0;
-	cursor: pointer;
+  inline-size: 1rem;
+  block-size: 1rem;
+  appearance: none;
+  background-color: oklch(0 0 0 / 0);
+  border: 0;
+  cursor: pointer;
 
-	svg {
-		inline-size: 1rem;
-		block-size: 1rem;
-		fill: oklch(0.5 0.3 30);
-	}
+  svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+    fill: oklch(0.5 0.3 30);
+  }
 }
 
 @keyframes fade {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

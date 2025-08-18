@@ -1,12 +1,4 @@
-import "handcraft/dom/classes.js";
-import "handcraft/dom/nodes.js";
-import "handcraft/dom/on.js";
-import "handcraft/dom/prop.js";
-import { define } from "handcraft/define.js";
-import { each } from "handcraft/each.js";
-import { $, h } from "handcraft/dom.js";
-import { effect, watch } from "handcraft/reactivity.js";
-import { when } from "handcraft/when.js";
+import { $, define, each, effect, h, watch, when } from "@handcraft/lib";
 
 const { input, label, h1, li, button, ol, div } = h.html;
 const { title, path, svg } = h.svg;
@@ -28,9 +20,9 @@ define("to-do-app").setup((host) => {
     localStorage.setItem("to-do-app", JSON.stringify(state));
   });
 
-  const heading = h1.classes("title")("To Do List");
+  const heading = h1.class("title")("To Do List");
   const showDone = () =>
-    div.classes("show-done")(
+    div.class("show-done")(
       input
         .id("show-done")
         .type("checkbox")
@@ -50,7 +42,7 @@ define("to-do-app").setup((host) => {
       label.for("show-done")("Show done"),
     );
   const textInput = input
-    .classes("input-text")
+    .class("input-text")
     .placeholder("What do you have to do?")
     .on("keypress", function (e) {
       if (e.key === "Enter") {
@@ -94,7 +86,7 @@ define("to-do-app").setup((host) => {
       const itemLabel = label.for(genId)(() => value.text);
       const deleteButton = button
         .type("button")
-        .classes("delete")
+        .class("delete")
         .on("click", function () {
           value.isLeaving = true;
           value.isDeleted = true;
@@ -108,7 +100,7 @@ define("to-do-app").setup((host) => {
         );
 
       return li
-        .classes("item", {
+        .class("item", {
           done: () => value.isDone,
           leaving: () => value.isLeaving,
           entering: () => value.isEntering,
@@ -143,8 +135,8 @@ define("to-do-app").setup((host) => {
           }
         })(toggleDoneCheckbox, itemLabel, deleteButton);
     })
-    .fallback(() => li.classes("item")("No items yet"));
-  const listOl = ol.classes("list")(itemsList);
+    .fallback(() => li.class("item")("No items yet"));
+  const listOl = ol.class("list")(itemsList);
 
   host(
     heading,

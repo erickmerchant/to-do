@@ -93,15 +93,6 @@ to-do-app {
   text-decoration: line-through;
 }
 
-.leaving {
-  animation-name: fade;
-}
-
-.entering {
-  animation-direction: reverse;
-  animation-name: fade;
-}
-
 .delete {
   inline-size: 1rem;
   block-size: 1rem;
@@ -117,11 +108,6 @@ to-do-app {
   }
 }
 
-@keyframes fade {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+:root::view-transition-group(*) {
+  animation-duration: 0.25s;
 }

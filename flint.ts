@@ -1,17 +1,12 @@
-import css from "@flint/framework/plugins/css";
-import js from "@flint/framework/plugins/js";
+import css from "@flint/framework/handlers/css";
+import js from "@flint/framework/handlers/js";
 import flint from "@flint/framework";
-import index from "./index.js";
-import { render } from "@handcraft/lib";
+import index from "./index.ts";
 
 const app = flint("public", "dist")
-  .cache("/")
-  .route(
-    "/",
-    async (c: { resolve: (url: string) => string }) => render(await index(c)),
-  )
-  .use("/styles.css", css)
-  .use("/app.js", js);
+  .route("/", index)
+  .file("/styles.css", css)
+  .file("/app.js", js);
 
 export default app;
 

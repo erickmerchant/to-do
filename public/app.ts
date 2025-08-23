@@ -1,6 +1,6 @@
 import { $, define, each, effect, h, watch, when } from "@handcraft/lib";
 
-const { input, label, h1, li, button, ol, div } = h.html;
+const { input, label, h1, li, button, ol, div, footer, p } = h.html;
 const { title, path, svg } = h.svg;
 
 type Item = {
@@ -17,8 +17,9 @@ const startViewTransition = document.startViewTransition
   };
 
 define("to-do-app").setup((host) => {
+  const stored = localStorage.getItem("to-do-app");
   const state = watch<{ list: Array<Item>; showDone: boolean }>(
-    JSON.parse(localStorage.getItem("to-do-app") ?? "null") ?? {
+    (stored ? JSON.parse(stored) : null) ?? {
       list: [],
       showDone: true,
     },
@@ -34,7 +35,7 @@ define("to-do-app").setup((host) => {
   });
 
   const heading = h1.class("title")("To Do List");
-  const showDone = () =>
+  const showDone = when(() => state.list.length > 0).show(() =>
     div.class("show-done")(
       input
         .id("show-done")
@@ -48,8 +49,10 @@ define("to-do-app").setup((host) => {
           });
         }),
       label.for("show-done")("Show done"),
-    );
+    )
+  );
   const textInput = input
+    .id("add-new")
     .class("input-text")
     .placeholder("What do you have to do?")
     .on("keypress", function (e: KeyboardEvent) {
@@ -79,10 +82,10 @@ define("to-do-app").setup((host) => {
   const itemsList = each(state.list)
     .filter((value) => state.showDone || !value.isDone)
     .map((value, index) => {
-      const genId = () => `item-${index()}`;
+      const id = () => `item-${index()}`;
       const toggleDoneCheckbox = input
         .type("checkbox")
-        .id(genId)
+        .id(id)
         .prop("checked", () => value.isDone)
         .on("change", function () {
           // @ts-ignore complaints about this
@@ -91,7 +94,7 @@ define("to-do-app").setup((host) => {
             value.isDone = checked;
           });
         });
-      const itemLabel = label.for(genId)(() => value.text);
+      const itemLabel = label.for(id)(() => value.text);
       const deleteButton = button
         .type("button")
         .class("delete")
@@ -116,6 +119,7 @@ define("to-do-app").setup((host) => {
           done: () => value.isDone,
           dragging: () => dragState.item === value(),
         })
+        .style({ "view-transition-name": id })
         .prop("draggable", true)
         .on("dragstart", function (e: DragEvent) {
           dragState.item = value();
@@ -137,12 +141,43 @@ define("to-do-app").setup((host) => {
     })
     .fallback(() => li.class("item")("No items yet"));
   const listOl = ol.class("list")(itemsList);
+  const footing = footer.class("footer")(
+    p(() =>
+      `Showing ${
+        state.list.filter((item) => state.showDone || !item.isDone).length
+      } of ${state.list.length}`
+    ),
+    when(() =>
+      state.list.filter((item) => item.isDone).length !==
+        0
+    ).show(() =>
+      button.class("clear-done").on("click", () => {
+        startViewTransition(() => {
+          const toDelete = [];
+
+          for (const item of state.list) {
+            if (!item.isDone) continue;
+
+            toDelete.push(item);
+          }
+
+          for (const item of toDelete) {
+            state.list.splice(
+              state.list.findIndex((i) => i === item),
+              1,
+            );
+          }
+        });
+      })("Clear Done")
+    ),
+  );
 
   host(
     heading,
-    when(() => state.list.length > 0).show(showDone),
+    showDone,
     textInput,
     listOl,
+    footing,
   );
 
   $(document.body).on("dragover dragleave drop", function (e) {

@@ -42,6 +42,7 @@ to-do-app {
   grid-template-columns: min-content auto;
   align-items: center;
   gap: 0.5rem;
+  font-size: 0.875rem;
 }
 
 .input-text {
@@ -51,6 +52,7 @@ to-do-app {
   padding-inline: 0.5rem;
   border: 1px solid oklch(0.5 0 0);
   border-radius: 0.25rem;
+  margin-block-end: 1rem;
 }
 
 .list {
@@ -72,8 +74,7 @@ to-do-app {
   grid-template-columns: subgrid;
   align-items: center;
   cursor: move;
-  animation-duration: 0.125s;
-  animation-fill-mode: both;
+  view-transition-class: item;
 
   :not(a, button, input) {
     cursor: inherit;
@@ -108,6 +109,21 @@ to-do-app {
   }
 }
 
-:root::view-transition-group(*) {
-  animation-duration: 0.25s;
+.footer {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  padding-block-start: 1rem;
+}
+
+.clear-done {
+  background-color: oklch(0 0 0 / 0);
+  border-color: oklch(0 0 0 / 0);
+  cursor: pointer;
+  color: oklch(0.5 0.3 200);
+}
+
+::view-transition-group(.item) {
+  animation-duration: 0.125s;
 }

@@ -124,6 +124,10 @@ to-do-app {
   color: oklch(0.5 0.3 200);
 }
 
+::view-transition-group(*) {
+  animation-duration: 0;
+}
+
 ::view-transition-group(.item) {
   animation-duration: 0.125s;
 }

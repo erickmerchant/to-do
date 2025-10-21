@@ -1,6 +1,6 @@
 import { $, define, each, effect, h, watch, when } from "@handcraft/lib";
 
-const { input, label, h1, li, button, ol, div, footer, p } = h.html;
+const { input, label, h1, li, button, ol, div, p } = h.html;
 const { title, path, svg } = h.svg;
 
 type Item = {
@@ -137,7 +137,7 @@ define("to-do-app").setup((host) => {
     })
     .fallback(() => li.class("item")("No items yet"));
   const listOl = ol.class("list")(itemsList);
-  const footing = footer.class("footer")(
+  const footing = div.class("footer")(
     p(() =>
       `Showing ${
         state.list.filter((item) => state.showDone || !item.isDone).length

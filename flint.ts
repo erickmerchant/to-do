@@ -1,9 +1,9 @@
 import css from "@flint/framework/handlers/css";
 import js from "@flint/framework/handlers/js";
 import flint from "@flint/framework";
-import index from "./src/index.ts";
+import index from "./index.ts";
 
-const app = flint("src", "dist")
+const app = flint()
   .route("/", index)
   .file("/styles.css", css)
   .file("/app.js", js);

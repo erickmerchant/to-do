@@ -38,7 +38,7 @@ define("to-do-app").setup((host) => {
         .type("checkbox")
         .prop("checked", () => state.showDone)
         .on("change", function () {
-          // @ts-ignore ignore shadowing
+          // @ts-ignore{2683} ignore shadowing
           const checked = this.checked;
           startViewTransition(() => {
             state.showDone = checked;
@@ -55,7 +55,7 @@ define("to-do-app").setup((host) => {
       if (e.key === "Enter") {
         e.preventDefault();
 
-        // @ts-ignore complaints about this
+        // @ts-ignore{2683} complaints about this
         const text = this.value.trim();
 
         if (!text) {
@@ -71,7 +71,7 @@ define("to-do-app").setup((host) => {
           );
         });
 
-        // @ts-ignore complaints about this
+        // @ts-ignore{2683} complaints about this
         this.value = "";
       }
     } as EventListener);
@@ -84,8 +84,9 @@ define("to-do-app").setup((host) => {
         .id(id)
         .prop("checked", () => value.isDone)
         .on("change", function () {
-          // @ts-ignore complaints about this
+          // @ts-ignore{2683} complaints about this
           const checked = this.checked;
+
           startViewTransition(() => {
             value.isDone = checked;
           });
@@ -120,7 +121,7 @@ define("to-do-app").setup((host) => {
         .on("dragstart", function (e: DragEvent) {
           dragState.item = value();
 
-          // @ts-ignore exists
+          // @ts-ignore{2683} exists
           e.dataTransfer.effectAllowed = "move";
         } as EventListener)
         .on("dragend", function () {

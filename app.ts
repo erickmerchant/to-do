@@ -169,7 +169,7 @@ define("to-do-app").setup((host) => {
     ),
   );
 
-  host(
+  $(host)(
     heading,
     showDone,
     textInput,

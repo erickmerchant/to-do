@@ -38,8 +38,7 @@ define("to-do-app", {
           .id("show-done")
           .type("checkbox")
           .prop("checked", () => state.showDone)
-          .on("change", function () {
-            // @ts-ignore{2683} ignore shadowing
+          .on("change", function (this: HTMLInputElement) {
             const checked = this.checked;
             startViewTransition(() => {
               state.showDone = checked;
@@ -52,11 +51,10 @@ define("to-do-app", {
       .id("add-new")
       .class("input-text")
       .placeholder("What do you have to do?")
-      .on("keypress", function (e: KeyboardEvent) {
+      .on("keypress", function (this: HTMLInputElement, e: KeyboardEvent) {
         if (e.key === "Enter") {
           e.preventDefault();
 
-          // @ts-ignore{2683} complaints about this
           const text = this.value.trim();
 
           if (!text) {
@@ -72,7 +70,6 @@ define("to-do-app", {
             );
           });
 
-          // @ts-ignore{2683} complaints about this
           this.value = "";
         }
       } as EventListener);
@@ -84,8 +81,7 @@ define("to-do-app", {
           .type("checkbox")
           .id(id)
           .prop("checked", () => value.isDone)
-          .on("change", function () {
-            // @ts-ignore{2683} complaints about this
+          .on("change", function (this: HTMLInputElement) {
             const checked = this.checked;
 
             startViewTransition(() => {
@@ -122,8 +118,7 @@ define("to-do-app", {
           .on("dragstart", function (e: DragEvent) {
             dragState.item = value();
 
-            // @ts-ignore{2683} exists
-            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer!.effectAllowed = "move";
           } as EventListener)
           .on("dragend", function () {
             dragState.item = null;
@@ -176,9 +171,7 @@ define("to-do-app", {
       textInput,
       listOl,
       footing,
-    );
-
-    $(document.body).on("dragover dragleave drop", function (e) {
+    ).on("dragover dragleave drop", function (e) {
       e.preventDefault();
     });
   },

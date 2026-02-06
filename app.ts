@@ -8,10 +8,6 @@ type Item = {
   isDone: boolean;
 };
 
-const startViewTransition = (cb: () => void) => {
-  document.startViewTransition ? document.startViewTransition(cb) : cb();
-};
-
 define("to-do-app", {
   connected(host) {
     const stored = localStorage.getItem("to-do-app");
@@ -176,3 +172,7 @@ define("to-do-app", {
     });
   },
 });
+
+function startViewTransition(cb: () => void) {
+  document.startViewTransition ? document.startViewTransition(cb) : cb();
+}

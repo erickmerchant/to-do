@@ -31,7 +31,7 @@ define("to-do-app", {
 
     state.list = watch<Array<Item>>(state.list);
 
-    fetch(`./api/${this.year}-${this.month}-${this.day}/`, {
+    fetch(`/api/${this.year}-${this.month}-${this.day}/`, {
       headers: { "content-type": "application/json" },
     }).then(async (res: Response) => {
       const { list, showDone }: State = await res.json();
@@ -43,7 +43,7 @@ define("to-do-app", {
       state.showDone = showDone;
 
       effect(() => {
-        fetch(`./api/${this.year}-${this.month}-${this.day}/`, {
+        fetch(`/api/${this.year}-${this.month}-${this.day}/`, {
           method: "post",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(state),

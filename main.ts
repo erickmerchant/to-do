@@ -1,3 +1,4 @@
+import type { FlintRouteContext } from "@flint/framework";
 import { h } from "@handcraft/lib";
 import { render } from "@handcraft/lib/render";
 
@@ -12,7 +13,7 @@ const {
   "to-do-app": todoApp,
 } = h.html;
 
-export default function () {
+export default function ({ params }: FlintRouteContext) {
   return render(
     html.lang("en-US")(
       head(
@@ -20,9 +21,14 @@ export default function () {
         meta.name("viewport").content("width=device-width, initial-scale=1"),
         title("To Do List"),
         link.rel("stylesheet").href("/styles.css"),
-        script.type("module").src("/app.js"),
+        script.type("module").src("/to-do-app.js"),
       ),
-      body(todoApp()),
+      body(
+        todoApp
+          .year(params.year ?? false)
+          .month(params.month ?? false)
+          .day(params.day ?? false),
+      ),
     ),
   );
 }

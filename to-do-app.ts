@@ -8,11 +8,19 @@ type Item = {
   isDone: boolean;
 };
 
+type State = { list: Array<Item>; showDone: boolean };
+
+const [year, month, day] = Temporal.Now.plainDateISO().toString().split("-");
+
 define("to-do-app", {
+  attrs: {
+    year,
+    month,
+    day,
+  },
   connected(host) {
-    const stored = localStorage.getItem("to-do-app");
-    const state = watch<{ list: Array<Item>; showDone: boolean }>(
-      (stored ? JSON.parse(stored) : null) ?? {
+    const state = watch<State>(
+      {
         list: [],
         showDone: true,
       },
@@ -21,13 +29,31 @@ define("to-do-app", {
       item: null,
     });
 
-    state.list = watch<Array<Item>>(state.list.map((item) => watch(item)));
+    state.list = watch<Array<Item>>(state.list);
 
-    effect(() => {
-      localStorage.setItem("to-do-app", JSON.stringify(state));
+    fetch(`./api/${this.year}-${this.month}-${this.day}/`, {
+      headers: { "content-type": "application/json" },
+    }).then(async (res: Response) => {
+      const { list, showDone }: State = await res.json();
+
+      for (const item of list) {
+        state.list.push(watch(item));
+      }
+
+      state.showDone = showDone;
+
+      effect(() => {
+        fetch(`./api/${this.year}-${this.month}-${this.day}/`, {
+          method: "post",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(state),
+        });
+      });
     });
 
-    const heading = h1.class("title")("To Do List");
+    const heading = h1.class("title")(() =>
+      `${this.year}-${this.month}-${this.day}`
+    );
     const showDone = when(() => state.list.length > 0).show(() =>
       div.class("show-done")(
         input
@@ -161,15 +187,15 @@ define("to-do-app", {
       ),
     );
 
-    $(host)(
+    $(host).on("dragover dragleave drop", function (e) {
+      e.preventDefault();
+    })(
       heading,
       showDone,
       textInput,
       listOl,
       footing,
-    ).on("dragover dragleave drop", function (e) {
-      e.preventDefault();
-    });
+    );
   },
 });
 

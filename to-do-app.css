@@ -1,0 +1,127 @@
+@scope (to-do-app) {
+  :scope {
+    display: grid;
+    max-inline-size: 40rem;
+    padding-inline: 1rem;
+    margin-inline: auto;
+    margin-block-start: 1rem;
+    grid-auto-rows: max-content;
+    grid-template-columns: auto min-content;
+    gap: 0.5rem;
+    align-items: center;
+    white-space: nowrap;
+    accent-color: oklch(0.5 0.3 150);
+  }
+
+  [type="checkbox"] {
+    inline-size: 1rem;
+    block-size: 1rem;
+    cursor: pointer;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .show-done {
+    display: grid;
+    grid-template-columns: min-content auto;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .input-text {
+    grid-column: 1 / -1;
+    appearance: none;
+    padding-block: 0.25rem;
+    padding-inline: 0.5rem;
+    border: 1px solid oklch(0.5 0 0);
+    border-radius: 0.25rem;
+    margin-block-end: 1rem;
+  }
+
+  .list {
+    view-transition-name: list;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-rows: max-content;
+    grid-template-columns: max-content auto max-content;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .item {
+    grid-column: 1 / -1;
+    display: grid;
+    background-color: oklch(1 0 0);
+    padding-block: 0.25rem;
+    padding-inline: 0.25rem;
+    border-radius: 0.25rem;
+    grid-template-columns: subgrid;
+    align-items: center;
+    cursor: move;
+    view-transition-class: item;
+
+    :not(a, button, input) {
+      cursor: inherit;
+    }
+  }
+
+  .dragging {
+    background-color: oklch(0.9 0 0) !important;
+    cursor: move !important;
+
+    > * {
+      visibility: hidden;
+    }
+  }
+
+  .done {
+    text-decoration: line-through;
+  }
+
+  .delete {
+    inline-size: 1rem;
+    block-size: 1rem;
+    appearance: none;
+    background-color: oklch(0 0 0 / 0);
+    border: 0;
+    cursor: pointer;
+
+    svg {
+      inline-size: 1rem;
+      block-size: 1rem;
+      fill: oklch(0.5 0.3 30);
+    }
+  }
+
+  .footer {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    padding-block-start: 1rem;
+    view-transition-name: footer;
+  }
+
+  .clear-done {
+    background-color: oklch(0 0 0 / 0);
+    border-color: oklch(0 0 0 / 0);
+    cursor: pointer;
+    color: oklch(0.5 0.3 200);
+  }
+
+  ::view-transition-group(.item) {
+    animation-duration: 0.125s;
+  }
+
+  ::view-transition-group(list) {
+    animation-duration: 0.125s;
+  }
+
+  ::view-transition-group(footer) {
+    animation-duration: 0.125s;
+  }
+}

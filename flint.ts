@@ -7,7 +7,7 @@ import main from "./main.ts";
 import * as api from "./api.ts";
 
 const app = flint()
-  .route("/", main, [])
+  .route("/", main)
   .route(p`/:year-:month-:day/`, main)
   .route(
     p`/api/:year-:month-:day/`,

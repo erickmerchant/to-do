@@ -20,8 +20,8 @@ export default function ({ params }: FlintRouteContext) {
         meta.charset("utf-8"),
         meta.name("viewport").content("width=device-width, initial-scale=1"),
         title("To Do List"),
-        link.rel("stylesheet").href("/styles.css"),
-        script.type("module").src("/to-do-app.js"),
+        link.rel("stylesheet").href("/styles.css?inline"),
+        script.type("module").src("/to-do-app.js?inline"),
       ),
       body(
         todoApp

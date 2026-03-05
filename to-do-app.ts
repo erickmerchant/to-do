@@ -1,4 +1,7 @@
-import { $, define, each, effect, h, watch, when } from "@handcraft/lib";
+import { $, define, each, h, watch, when } from "@handcraft/lib";
+
+const viewTransition = (cb: () => void) =>
+  document.startViewTransition ? document.startViewTransition(cb) : cb();
 
 const { input, label, h1, li, button, ol, div, p } = h.html;
 const { title, path, svg } = h.svg;
@@ -25,6 +28,19 @@ define("to-do-app", {
         showDone: true,
       },
     );
+
+    const viewTransitionAndSave = (cb: () => void) => {
+      viewTransition(() => {
+        cb();
+
+        fetch(`/api/${this.year}-${this.month}-${this.day}/`, {
+          method: "post",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(state),
+        });
+      });
+    };
+
     const dragState = watch<{ item: Item | null }>({
       item: null,
     });
@@ -41,14 +57,6 @@ define("to-do-app", {
       }
 
       state.showDone = showDone;
-
-      effect(() => {
-        fetch(`/api/${this.year}-${this.month}-${this.day}/`, {
-          method: "post",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(state),
-        });
-      });
     });
 
     const heading = h1.class("title")(() =>
@@ -62,7 +70,7 @@ define("to-do-app", {
           .prop("checked", () => state.showDone)
           .on("change", function (this: HTMLInputElement) {
             const checked = this.checked;
-            startViewTransition(() => {
+            viewTransitionAndSave(() => {
               state.showDone = checked;
             });
           }),
@@ -83,7 +91,7 @@ define("to-do-app", {
             return;
           }
 
-          startViewTransition(() => {
+          viewTransitionAndSave(() => {
             state.list.push(
               watch<Item>({
                 text,
@@ -106,7 +114,7 @@ define("to-do-app", {
           .on("change", function (this: HTMLInputElement) {
             const checked = this.checked;
 
-            startViewTransition(() => {
+            viewTransitionAndSave(() => {
               value.isDone = checked;
             });
           });
@@ -115,7 +123,7 @@ define("to-do-app", {
           .type("button")
           .class("delete")
           .on("click", function () {
-            startViewTransition(() => {
+            viewTransitionAndSave(() => {
               state.list.splice(
                 state.list.findIndex((item) => item === value()),
                 1,
@@ -167,7 +175,7 @@ define("to-do-app", {
           0
       ).show(() =>
         button.class("clear-done").on("click", () => {
-          startViewTransition(() => {
+          viewTransitionAndSave(() => {
             const toDelete = [];
 
             for (const item of state.list) {
@@ -198,7 +206,3 @@ define("to-do-app", {
     );
   },
 });
-
-function startViewTransition(cb: () => void) {
-  document.startViewTransition ? document.startViewTransition(cb) : cb();
-}

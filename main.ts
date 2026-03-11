@@ -14,7 +14,7 @@ const {
 } = h.html;
 
 export default function ({ params }: FlintRouteContext) {
-  return render(
+  return render(() =>
     html.lang("en-US")(
       head(
         meta.charset("utf-8"),
@@ -29,6 +29,6 @@ export default function ({ params }: FlintRouteContext) {
           .month(params.month ?? false)
           .day(params.day ?? false),
       ),
-    ),
+    )
   );
 }

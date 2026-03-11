@@ -31,13 +31,17 @@ define("to-do-app", {
 
     const viewTransitionAndSave = (cb: () => void) => {
       viewTransition(() => {
-        cb();
+        save(cb);
+      });
+    };
 
-        fetch(`/api/${this.year}-${this.month}-${this.day}/`, {
-          method: "post",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(state),
-        });
+    const save = (cb: () => void) => {
+      cb();
+
+      fetch(`/api/${this.year}-${this.month}-${this.day}/`, {
+        method: "post",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(state),
       });
     };
 
@@ -146,20 +150,26 @@ define("to-do-app", {
           .style({ "view-transition-name": id })
           .prop("draggable", true)
           .on("dragstart", function (e: DragEvent) {
-            dragState.item = value();
+            save(() => {
+              dragState.item = value();
 
-            e.dataTransfer!.effectAllowed = "move";
+              e.dataTransfer!.effectAllowed = "move";
+            });
           } as EventListener)
           .on("dragend", function () {
-            dragState.item = null;
+            save(() => {
+              dragState.item = null;
+            });
           })
           .on("dragenter", function () {
-            if (dragState.item != null) {
-              const from = state.list.findIndex((t) => t === dragState.item);
+            save(() => {
+              if (dragState.item != null) {
+                const from = state.list.findIndex((t) => t === dragState.item);
 
-              state.list.splice(from, 1);
-              state.list.splice(index(), 0, dragState.item);
-            }
+                state.list.splice(from, 1);
+                state.list.splice(index(), 0, dragState.item);
+              }
+            });
           })(toggleDoneCheckbox, itemLabel, deleteButton);
       })
       .fallback(() => li.class("item")("No items yet"));

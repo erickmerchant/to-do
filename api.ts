@@ -1,4 +1,4 @@
-import type { FlintRouteContext } from "@flint/framework";
+import { type FlintRouteContext } from "@flint/framework";
 import * as Fs from "@std/fs";
 
 export function get(

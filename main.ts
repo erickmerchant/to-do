@@ -1,4 +1,4 @@
-import type { FlintRouteContext } from "@flint/framework";
+import { type FlintRouteContext } from "@flint/framework";
 import { h } from "@handcraft/lib/templating";
 
 const {

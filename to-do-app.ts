@@ -107,7 +107,7 @@ define("to-do-app", {
           this.value = "";
         }
       } as EventListener);
-    const itemsList = each(state.list)
+    const itemsList = each<Item>(state.list)
       .filter((value) => state.showDone || !value.isDone)
       .map((value, index) => {
         const id = () => `item-${index()}`;

@@ -1,9 +1,14 @@
-import { type FlintRouteContext } from "@flint/framework";
 import * as Fs from "@std/fs";
 
+export type APIParams = { year?: string; month?: string; day?: string };
+
 export function get(
-  { params }: FlintRouteContext,
+  { params }: { params: APIParams },
 ) {
+  if (!params.year || !params.month || !params.day) {
+    return new Response("", { status: 404 });
+  }
+
   return Deno.readTextFile(
     `./storage/${params.year}-${params.month}-${params.day}.json`,
   ).then((data) => JSON.parse(data)).catch(() => ({
@@ -13,8 +18,15 @@ export function get(
 }
 
 export async function post(
-  { params, request }: FlintRouteContext,
+  { params, request }: {
+    params: APIParams;
+    request: Request;
+  },
 ) {
+  if (!params.year || !params.month || !params.day) {
+    return new Response("", { status: 404 });
+  }
+
   const data = await request.text();
 
   await Fs.ensureDir("storage");

@@ -1,5 +1,5 @@
-import { type FlintRouteContext } from "@flint/framework";
 import { h } from "@handcraft/lib/templating";
+import { type APIParams } from "./api.ts";
 
 const {
   html,
@@ -12,7 +12,9 @@ const {
   "to-do-app": todoApp,
 } = h.html;
 
-export default function ({ params }: FlintRouteContext) {
+export default function (
+  { params }: { params: APIParams },
+) {
   return html.lang("en-US")(
     head(
       meta.charset("utf-8"),

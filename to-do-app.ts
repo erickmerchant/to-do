@@ -172,7 +172,11 @@ define("to-do-app", {
             });
           })(toggleDoneCheckbox, itemLabel, deleteButton);
       })
-      .fallback(() => li.class("item")("No items yet"));
+      .fallback(() =>
+        li.class("item")(() =>
+          state.list.length > 0 ? "All done for now." : "What's to do?"
+        )
+      );
     const listOl = ol.class("list")(itemsList);
     const footing = div.class("footer")(
       p(() =>

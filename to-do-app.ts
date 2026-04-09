@@ -15,12 +15,10 @@ type State = { list: Array<Item>; showDone: boolean };
 
 const [year, month, day] = Temporal.Now.plainDateISO().toString().split("-");
 
-define("to-do-app", {
-  attrs: {
-    year,
-    month,
-    day,
-  },
+define<{ year: string; month: string; day: string }>("to-do-app", {
+  year,
+  month,
+  day,
   connected(host) {
     const state = watch<State>(
       {

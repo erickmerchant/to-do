@@ -1,5 +1,5 @@
 import { h } from "@handcraft/lib/templating";
-import { type APIParams } from "./api.ts";
+import { type APIParams } from "../api.ts";
 
 const {
   html,
@@ -20,8 +20,8 @@ export default function (
       meta.charset("utf-8"),
       meta.name("viewport").content("width=device-width, initial-scale=1"),
       title("To Do List"),
-      link.rel("stylesheet").href("/styles.css"),
-      script.type("module").src("/to-do-app.js"),
+      link.rel("stylesheet").href("/pages/styles.css"),
+      script.type("module").src("/elements/to-do-app.js"),
     ),
     body(
       todoApp

@@ -1,6 +1,6 @@
 @layer page, component;
 
-@import "./to-do-app.css" layer(component);
+@import "../elements/to-do-app.css" layer(component);
 
 @layer page {
   * {

@@ -3,7 +3,7 @@ import js from "@flint/framework/handlers/js";
 import method from "@flint/framework/handlers/method";
 import json from "@flint/framework/handlers/json";
 import flint, { pattern as p } from "@flint/framework";
-import main from "./main.ts";
+import main from "./pages/main.ts";
 import * as api from "./api.ts";
 
 const app = flint()
@@ -13,8 +13,8 @@ const app = flint()
     p`/api/:year-:month-:day/`,
     method.post(json(api.post)).get(json(api.get)),
   )
-  .file("/styles.css", css)
-  .file("/to-do-app.js", js);
+  .file("/pages/styles.css", css)
+  .file("/elements/to-do-app.js", js);
 
 export default app;
 
